@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Loading</title>
+    <link rel="stylesheet" href="assets/css/main_css.css" />
+
+    <script>
+
+    </script>
+  </head>
+  <body>
+    <div id = 'dis'>
+      <div align="center" id="loading_image " style="width:100%; height100%; text-align:center; font-size:12pt; color:black; font-weight:bold; padding-top:100px;">
+      <img src="images/loading.gif" ><br>
+        <h1 style="color:black; font-weight:bold; font-family: Malgun Gothic;"><strong>사진 분석중</strong></h1>
+      <br><br>
+        <h2 style="color:black; font-weight:bold; font-family: Malgun Gothic;">인스타그램의 업로드할 사진의 태그를 추천합니다.</h2>
+      </div>
+
+      <form name="HiddenForm" method="POST" th:with="serverURL = ${ServerAdd}+'/imageTagRecommend'" th:action="${serverURL}" style="display:none">
+        <input type="text" name = "id" style="display:none" th:value="${userID}">
+        <!--<button class="imageSortDatePagebutton" type="submit">imageSortDatePage!</button>-->
+      </form>
+
+
+    </div>
+
+    <script>
+    document.HiddenForm.submit();
+    </script>
+  </body>
+</html>

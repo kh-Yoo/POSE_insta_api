@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<!--
+   Visualize by TEMPLATED
+   templated.co @templatedco
+   Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+   <head>
+      <title>캡스톤디자인4조</title>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel="stylesheet" href="assets/css/main_css.css" />
+
+        <style>
+            .f{
+                margin-left: 35%;
+            }
+            .Startbutton {
+                margin-left: 12%;
+                width: 150px;
+            }
+    </style>
+    <script>
+        function button_click() {
+            var chk1= document.getElementById('chk1');//id값으로 checkbox 찾기.
+            if(!chk1.checked){//checkbox가 check안됐으면,
+                alert('개인정보 사용에 동의해 주세요');
+                event.preventDefault()//submit 정지.
+            }
+        }
+    </script>
+   </head>
+   <body>
+
+      <!-- Wrapper -->
+         <div id="wrapper">
+
+            <!-- Header -->
+               <header id="header">
+                  <span class="avatar"><img src="images/POSE.png" alt="" /></span>
+                  <h3>This is <strong>POSE</strong>, a photo book site that used deeplearning technology.
+                        </h3><h3>
+                  We recommend hashtag to your picture. AI categorizes and displays your photos based on tags.
+                    </h3><h3>
+                        POSE는 딥러닝 기술을 이용한 해쉬 태그 추천 및 앨범 자동 정리 사이트 입니다. 게시물의 해시태그를 수집해 사진을 분류하고
+                        올릴 게시물의 사진에 대한 해시태그를 추천합니다.
+                    </h3>
+
+               </header>
+
+            <!-- Main -->
+               <section id="main">
+                        <div class="col-lg-5 offset-lg-2">
+                    <div class="hero__form">
+                        <form method="POST" action="http://172.30.1.10:8080/loading">
+                            <input type="text" name = "id"  placeholder="insta ID">
+                            <br>
+                            <input type="password" name ="password"  placeholder="insta PW">
+
+                            <div>
+                                <input type="checkbox" id="chk1"/> Pose앱에 대한 개인정보사용 동의
+                                <br>
+                                <div class="f">Please agree to access your photos.</div>
+                            </div>
+                            <br>
+                            <br>
+                            <!--<button type="submit" class = "Findbutton">Find ID/PW</button>        -->
+                            <br>
+                            <br>
+                            <div class="f">
+                                <button class="Startbutton" type="submit" onclick="button_click()" id="PoseStartbutton">Pose Start!</button>
+                                <!-- <button type="submit" class = "SignUpbutton">Sign Up!</button> -->
+                             </div>
+                         </form>
+                     </div>
+                 </div>
+                     </section>
+
+                 <!-- Footer -->
+               <footer id="footer">
+                  <p>&copy; SangMyung Univ. Capstone Design:Team 4.</p>
+               </footer>
+
+         </div>
+
+      <!-- Scripts -->
+         <script src="assets/js/jquery.min.js"></script>
+         <script src="assets/js/jquery.poptrox.min.js"></script>
+         <script src="assets/js/skel.min.js"></script>
+         <script src="assets/js/main.js"></script>
+
+   </body>
+</html>

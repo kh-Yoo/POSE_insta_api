@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Loading</title>
+    <link rel="stylesheet" href="assets/css/main_css.css" />
+
+    <script>
+
+      function button_click() {
+      /*
+            var instaBtn= document.getElementById('InstaStartbutton');
+            instaBtn.setAttribute("style", "display:none");
+
+            var instaBtn= document.getElementById('InstaStartbutton');
+            instaBtn.removeAttribute("style");
+
+            var link = 'https://www.instagram.com/';
+            location.href=link;
+        */
+            //
+        }
+
+        /*
+        function insta_button_click(){
+          alert('F12 -> ctrl+shift+m -> 새로고침을 해서 인스타를 모바일 버전으로 바꿔주세요');
+          //window.open('https://www.instagram.com/', '팝업창 이름', 'width=400, height=600');
+          window.open('https://www.instagram.com/');
+        }*/
+    </script>
+  </head>
+  <body>
+    <script language="javascript">
+    document.all.loadingBar.style.display='none';
+    </script>
+
+    <!--
+    <button class="InstaStartbutton" onclick="button_click()">InstaStartbutton!</button>-->
+
+    <div id = 'dis'>
+      <div align="center" id="loading_image " style="width:100%; height100%; text-align:center; font-size:12pt; color:black; font-weight:bold; padding-top:100px;">
+      <img src="images/loading.gif" ><br>
+        <h1 style="color:black; font-weight:bold; font-family: Malgun Gothic;">POSE app실행 중...</h1>
+      <br><br>
+        <h2 style="color:black; font-weight:bold; font-family: Malgun Gothic;">instaStartButton!을 클릭하여 인스타그램의 새로운 게시물을 작성하거나 프로필 페이지로 접속하세요.</h2>
+      </div>
+    </div>
+    <br>
+    <iframe id="iframe1" name="iframe1" style="display:none"></iframe>
+    <form method="GET" th:with="serverURL = ${ServerAdd}+'/instaStart'" th:action="${serverURL}" target = "iframe1" style="display: inline-block;margin-inline-start: 25%;width:20%;">
+      <button class="instaStartButton" type="submit">instaStartButton!</button>
+      <!--<input type="button" value="새창" onclick="insta_button_click()">-->
+    </form>
+    <!--<input type="button" value="새창" onclick="window.open('주소', '팝업창 이름', 'width=#, height=#')">
+-->
+
+    <form method="POST" th:with="serverURL = ${ServerAdd}+'/detailsPage'" th:action="${serverURL}" style="display: inline-block;margin-left: 10px;width:20%;">
+      <input type="text" name = "id" style="display:none" th:value="${userID}">
+      <input type="text" name = "pw" style="display:none" th:value="${userPW}">
+      <button class="DetailPagebutton" type="submit">DetailPage!</button>
+    </form>
+
+    <form method="POST" th:with="serverURL = ${ServerAdd}+'/dateImgCrawlingLoading'" th:action="${serverURL}" style="display:inline-block;width:30%;margin-left: 10px;">
+      <input type="text" name = "id" style="display:none" th:value="${userID}">
+      <input type="text" name = "pw" style="display:none" th:value="${userPW}">
+      <button class="imageSortDatePagebutton" type="submit">imageSortDatePage!</button>
+    </form>
+  </body>
+</html>

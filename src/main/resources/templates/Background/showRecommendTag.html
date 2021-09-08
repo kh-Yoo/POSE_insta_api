@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+    <meta charset="UTF-8">
+    <title>RecommendTag</title>
+    <link rel="stylesheet" href="assets/css/main_css.css" />
+
+    <!--
+    <script th:inline="javascript">
+        var result = [[${result}]];
+        console.log(result);
+
+        /*
+        for(var i = 0; i < result.length; i++){
+            console.log(result[i]);
+            var h2 = document.createElement('h2');
+            h2.innerHTML = result[i];
+		    div.appendChild(h2);
+        }*/
+
+		var div = document.getElementById('contentsDiv');
+		div.appendChild(h2);
+		result.forEach(function(item){
+		    console.log(item);
+		    var h2 = document.createElement('h2');
+		    h2.innerHTML = "" + item;
+
+		    var div = document.createElement('div');
+		    div.setAttribute('style','color:black; font-weight:bold; font-family: Malgun Gothic;');
+		});
+	</script>-->
+</head>
+<body>
+
+    <div id = 'dis'>
+        <div align="center" id="loading_image " style="width:100%; height100%; text-align:center; font-size:12pt; color:black; font-weight:bold; padding-top:100px;">
+            <h1 style="color:black; font-weight:bold; font-family: Malgun Gothic;"> <strong> *추천 태그*</strong> </h1>
+            <!--<img th:with="imgSrc = '/images/downloadImg/' + ${userID} + '.jpg'" th:src = "${imgSrc}" width="300" height="300">-->
+            <br><br>
+            <div th:text="${title}" style=" color:black; font-weight:bold; font-family: Malgun Gothic; font-size:25pt;"></div>
+            <!--<h2 id="contentsDiv" style="color:black; font-weight:bold; font-family: Malgun Gothic;">-->
+
+            <hr>
+            <tr th:each="result : ${result}">
+                <td>
+                    <div th:text="${result.tag}" style="color:black; font-weight:bold; font-family: Malgun Gothic; font-size:20pt;"></div>
+                </td>
+            </tr>
+        </div>
+    </div>
+</body>
+</html>

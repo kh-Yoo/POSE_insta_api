@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <style>
+  
+    .wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .content {
+      font-family: system-ui, serif;
+      font-size: 2rem;
+      padding: 3rem;
+    }
+
+    #File_text{
+      text-align: center;
+    }
+
+  </style>
+  <meta charset="UTF-8" />
+  <title>File Upload...</title>
+  <link rel="stylesheet" href="assets/css/main_css.css" />
+
+  <script>
+      function button1_click() {
+        console.log("버튼1을 누르셨습니다.");
+        var inputTemp = document.getElementById('myBtn');
+        inputTemp.value = "True";
+      }
+    </script>
+</head>
+<body>
+<div class = "wrapper">
+  <div class="content">
+  <h1 id = "File_text">File Upload</h1>
+  <hr>
+  <!--<iframe id="iframe1" name="iframe1" style="display:none"></iframe>-->
+  <hr>
+  <form method="post" th:with="serverURL = ${ServerAdd}+'/load'" th:action="${serverURL}" enctype="multipart/form-data"><!--target = "iframe1"-->
+    <input type="file" name="files" style="float:left;">
+    <input type="text" name="id" id="username" th:value="${userID}" style="display:none"><br>
+    <!--<input type = submit>-->
+    <button id = "myBtn" onclick="button1_click();" value="False" style="float:right;"> 제출 </button>
+  </form>
+  </div>
+</div>
+</body>
+</html>

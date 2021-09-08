@@ -1,0 +1,534 @@
+<!DOCTYPE HTML>
+<!--
+	Radius by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Radius by TEMPLATED</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/skel.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<!--<script src="assets/js/main.js"></script>-->
+
+	<script>
+		(function($) {
+			skel.breakpoints({
+				xlarge:	'(max-width: 1680px)',
+				large:	'(max-width: 1280px)',
+				medium:	'(max-width: 980px)',
+				small:	'(max-width: 736px)',
+				xsmall:	'(max-width: 480px)'
+			});
+
+		$(function() {
+
+			var	$window = $(window),
+				$body = $('body'),
+				$header = $('#header'),
+				$footer = $('#footer');
+
+			// Disable animations/transitions until the page has loaded.
+				$body.addClass('is-loading');
+
+				$window.on('load', function() {
+					window.setTimeout(function() {
+						$body.removeClass('is-loading');
+					}, 100);
+				});
+
+			// Fix: Placeholder polyfill.
+				$('form').placeholder();
+
+			// Prioritize "important" elements on medium.
+				skel.on('+medium -medium', function() {
+					$.prioritize(
+						'.important\\28 medium\\29',
+						skel.breakpoint('medium').active
+					);
+				});
+
+			// Header.
+				$header.each( function() {
+
+					var t 		= jQuery(this),
+						button 	= t.find('.button');
+
+					button.click(function(e) {
+
+						t.toggleClass('hide');
+
+						if ( t.hasClass('preview') ) {
+							return true;
+						} else {
+							e.preventDefault();
+						}
+
+					});
+
+				});
+
+			// Footer.
+				$footer.each( function() {
+
+					var t 		= jQuery(this),
+						inner 	= t.find('.inner'),
+						button 	= t.find('.info');
+
+					button.click(function(e) {
+						t.toggleClass('show');
+						e.preventDefault();
+					});
+
+				});
+
+		});
+
+	})(jQuery);
+
+	</script>
+
+
+	<script th:inline="javascript">
+		function List() {
+			this.listSize = 0;
+			this.pos = 0;
+			this.dataStore = [];
+			this.clear = clear;
+			this.find = find;
+			this.toString = toString;
+			this.insert = insert;
+			this.append = append;
+			this.remove = remove;
+			this.front = front;
+			this.end = end;
+			this.prev = prev;
+			this.next = next;
+			this.length = length;
+			this.currPos = currPos;
+			this.moveTo = moveTo;
+			this.getElement = getElement;
+			this.length = length;
+			this.contains = contains;
+			this.get = get;
+		}
+
+		// 배열 뒤에 요소 추가하는 함수
+		function append(element) {
+			this.dataStore[this.listSize++] = element;
+		}
+
+		// 요소의 index를 구하는 함수 (존재하지 않는 경우 -1 반환)
+		function find(element) {
+			for(var i=0; i<this.dataStore.length; i++) {
+				if(this.dataStore[i] == element) {
+					return i;
+				}
+			}
+			return -1;
+		}
+
+		// 요소를 삭제하고 그 결과를 boolean 으로 반환하는 함수
+		function remove(element){
+			var foundAt = this.find(element);
+
+			if(foundAt > -1) {
+				this.dataStore.splice(foundAt, 1);
+				--this.listSize;
+				return true;
+			}
+			return false;
+		}
+
+		// 리스트의 길이를 반환하는 함수
+		function length(){
+			return this.listSize;
+		}
+
+		// 리스트 요소를 확인하는 함수
+		function toString() {
+			return "["+this.dataStore+"]";
+		}
+
+
+		// 요소를 원하는 위치에 추가하고 그 결과를 boolean 으로 반환하는 함수
+		function insert(element, after){
+			var insertPos = this.find(after);
+			if(insertPos > -1) {
+				this.dataStore.splice(insertPos+1, 0, element);
+				++this.listSize;
+				return true;
+			}
+			return false;
+		}
+
+
+		// 리스트의 모든 요소를 삭제하는 함수
+		function clear() {
+			delete this.dataStore;
+			this.dataStore.length = 0;
+			this.listSize = 0;
+		}
+
+		// 리스트에 특정 요소가 있는지 그 결과를 boolean 으로 반환하는 함수
+		function contains(element) {
+			for(var i=0;i<this.dataStore.length;i++) {
+				if(this.dataStore[i] == element) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		// 리스트 탐색 관련 기능을 위한 pos 가 맨 앞을 보게 한다.
+		function front() {
+			this.pos = 0;
+		}
+
+		// 리스트 탐색 관련 기능을 위한 pos 가 맨 뒤를 보게 한다.
+		function end() {
+			this.pos = this.listSize-1;
+		}
+
+		// 리스트 탐색 관련 기능을 위한 pos 가 이전 위치를 보게 한다.
+		function prev() {
+			if(this.pos > 0)
+				--this.pos;
+		}
+
+		// 리스트 탐색 관련 기능을 위한 pos 가 다음 위치를 보게 한다.
+		function next() {
+			if(this.pos < this.listSize-1) {
+				++this.pos;
+			}
+		}
+
+		// 리스트 탐색 관련 기능을 위한 pos 가 보고 있는 현재 위치를 반환 한다.
+		function currPos() {
+			return this.pos;
+		}
+
+		// 리스트 탐색 관련 기능을 위한 pos 가 특정 위치를 보게 한다.
+		function moveTo(position) {
+			this.pos = position;
+		}
+
+		// pos 가 보고 있는 현재 위치의 값을 반환 한다.
+		function getElement(){
+			return this.dataStore[this.pos];
+		}
+
+		// index 로 요소를 반환하는 함수
+		function get(position){
+			return this.dataStore[position];
+		}
+
+
+
+        var imgSrcDate = [[${imgSrcDate}]];
+		var temp = "/";
+		var yearMonth = new List();
+		var serverURL = [[${ServerAdd}]];
+
+		imgSrcDate.forEach(function(item){
+			var strArray=item.src.split(temp);
+
+			/*
+			if(!(yearMonth.contains(strArray[2] + temp + strArray[3]))){
+				yearMonth.append(strArray[2] + temp + strArray[3]);
+			}*/
+
+			if(!(yearMonth.contains(strArray[2]))){
+				yearMonth.append(strArray[2]);
+			}
+		});
+		console.log(yearMonth);
+
+		/*
+		function Classification() {
+			for(var i = 0; i < yearMonth.length(); i++){
+				var div = document.createElement('div');
+				div.setAttribute('class','image fit');
+
+				var userID = [[${userID}]];
+				var a = document.createElement('a');
+				a.setAttribute('href', serverURL + '/gallery?id='+ userID + '&year='+yearMonth.get(i));
+
+				var img = document.createElement('img');
+				img.setAttribute('src','images/Forder.png');
+				img.setAttribute('alt','');
+
+				var span = document.createElement('span');
+				span.innerHTML = ""+yearMonth.get(i);
+
+				var columns = document.getElementById('columns');
+				columns.appendChild(div);
+				div.appendChild(a);
+				a.appendChild(img);
+				a.appendChild(span);
+			}
+		}*/
+
+		function DateClassification() {
+		    var columns = document.getElementById("columns");
+			while ( columns.hasChildNodes() )
+			{
+				 columns.removeChild( columns.firstChild );
+			}
+         for(var i = 0; i < yearMonth.length(); i++){
+            var div = document.createElement('div');
+            div.setAttribute('class','jb-wrap');
+
+            var div_img = document.createElement('div');
+            div_img.setAttribute('class', 'jb-image');
+
+            var userID = [[${userID}]];
+            var a = document.createElement('a');
+            a.setAttribute('href', serverURL + '/gallery?id='+ userID + '&year='+yearMonth.get(i));
+
+            var img = document.createElement('img');
+            img.setAttribute('src','images/Forder.png');
+            img.setAttribute('alt','');
+
+            var div_text = document.createElement('div');
+            div_text.setAttribute('class', 'jb-text');
+            var p = document.createElement('p');
+            p.innerHTML = ""+yearMonth.get(i);
+
+            var columns = document.getElementById('columns');
+            columns.appendChild(div);
+            div.appendChild(div_img);
+            div_img.appendChild(a);
+            a.appendChild(img);
+            div.appendChild(div_text);
+            div_text.appendChild(p);
+         }
+      }
+
+
+      function TagClassification() {
+      	var columns = document.getElementById("columns");
+		while ( columns.hasChildNodes() )
+		{
+			 columns.removeChild( columns.firstChild );
+		}
+
+         var TagList = new List();
+
+		 var hashTagClass = [[${hashTagClass}]];
+
+         hashTagClass.forEach(function(item){
+            TagList.append(item);
+		});
+         console.log(TagList);
+
+         for(var i = 0; i < TagList.length(); i++){
+         	var div = document.createElement('div');
+            div.setAttribute('class','jb-wrap');
+
+            var div_img = document.createElement('div');
+            div_img.setAttribute('class', 'jb-image');
+
+            var userID = [[${userID}]];
+            var a = document.createElement('a');
+            a.setAttribute('href', serverURL + '/TagClass?id='+ userID + '&tagName='+ TagList.get(i));
+
+            var img = document.createElement('img');
+            img.setAttribute('src','images/Forder.png');
+            img.setAttribute('alt','');
+
+            var div_text = document.createElement('div');
+            div_text.setAttribute('class', 'jb-text');
+            var p = document.createElement('p');
+            p.innerHTML = ""+TagList.get(i);
+
+            var columns = document.getElementById('columns');
+            columns.appendChild(div);
+            div.appendChild(div_img);
+            div_img.appendChild(a);
+            a.appendChild(img);
+            div.appendChild(div_text);
+            div_text.appendChild(p);
+         }
+
+		 var div = document.createElement('div');
+            div.setAttribute('class','jb-wrap');
+
+            var div_img = document.createElement('div');
+            div_img.setAttribute('class', 'jb-image');
+
+            var userID = [[${userID}]];
+            var a = document.createElement('a');
+            a.setAttribute('href', serverURL + '/TagClass?id='+ userID + '&tagName=기타');
+
+            var img = document.createElement('img');
+            img.setAttribute('src','images/Forder.png');
+            img.setAttribute('alt','');
+
+            var div_text = document.createElement('div');
+            div_text.setAttribute('class', 'jb-text');
+            var p = document.createElement('p');
+            p.innerHTML = "기타";
+
+            var columns = document.getElementById('columns');
+            columns.appendChild(div);
+            div.appendChild(div_img);
+            div_img.appendChild(a);
+            a.appendChild(img);
+            div.appendChild(div_text);
+            div_text.appendChild(p);
+      }
+
+	  /*
+      function TagClassification() {
+      	var columns = document.getElementById("columns");
+		while ( columns.hasChildNodes() )
+		{
+			 columns.removeChild( columns.firstChild );
+		}
+
+		var hashTagClass = [[${hashTagClass}]];
+
+		hashTagClass.forEach(function(item){
+			var div = document.createElement('div');
+            div.setAttribute('class','jb-wrap');
+
+            var div_img = document.createElement('div');
+            div_img.setAttribute('class', 'jb-image');
+
+            var userID = [[${userID}]];
+            var a = document.createElement('a');
+            a.setAttribute('href', serverURL + '/TagClass?id='+ userID + '&tagName='+ item);
+
+            var img = document.createElement('img');
+            img.setAttribute('src','images/Forder.png');
+            img.setAttribute('alt','');
+
+            var div_text = document.createElement('div');
+            div_text.setAttribute('class', 'jb-text');
+            var p = document.createElement('p');
+            p.innerHTML = ""+item;
+
+            var columns = document.getElementById('columns');
+            columns.appendChild(div);
+            div.appendChild(div_img);
+            div_img.appendChild(a);
+            a.appendChild(img);
+            div.appendChild(div_text);
+            div_text.appendChild(p);
+		});
+			var div = document.createElement('div');
+            div.setAttribute('class','jb-wrap');
+
+            var div_img = document.createElement('div');
+            div_img.setAttribute('class', 'jb-image');
+
+            var userID = [[${userID}]];
+            var a = document.createElement('a');
+            a.setAttribute('href', serverURL + '/TagClass?id='+ userID + '&tagName=기타');
+
+            var img = document.createElement('img');
+            img.setAttribute('src','images/Forder.png');
+            img.setAttribute('alt','');
+
+            var div_text = document.createElement('div');
+            div_text.setAttribute('class', 'jb-text');
+            var p = document.createElement('p');
+            p.innerHTML = "기타";
+
+            var columns = document.getElementById('columns');
+            columns.appendChild(div);
+            div.appendChild(div_img);
+            div_img.appendChild(a);
+            a.appendChild(img);
+            div.appendChild(div_text);
+            div_text.appendChild(p);
+      }*/
+	</script>
+
+	<style>
+      .jb-wrap {
+         width: 25%;
+         margin: 1px auto;
+         float: left;
+      }
+      .jb-wrap img {
+         width: 60%;
+         vertical-align: middle;
+         display: inline-block;
+      }
+      .jb-text {
+         width:60%;
+         background-color: #0e215eb9;
+         text-align: center;
+         color:white;
+      }
+   </style>
+
+	<script>
+      function button_click() {
+        console.log("버튼1을 누르셨습니다.");
+    	var cf = document.getElementById("classification");
+    	var cfOption = cf.options[cf.selectedIndex].value;
+    	if(cfOption == "Date"){
+    		DateClassification();
+    	}
+    	if(cfOption == "Hashtag"){
+    		TagClassification();
+    	}
+      }
+	</script>
+</head>
+<body onload="DateClassification()">
+
+
+<!-- Header-->
+<header id="header">
+	<div class="inner">
+		<div class="content">
+			<h1>Pose</h1>						<h2>날짜 기준으로 분류한 결과입니다. 분류기준은 장소, 해시태그가 될 수 있습니다.</h2>
+			<h2>It is sorted by date. We can sort it by place and hashtag</h2>
+			<a href="#" class="button big alt"><span>Let's Go</span></a>
+		</div>
+		<a href="#" class="button hidden"><span>Let's Go</span></a>
+	</div>
+</header>
+
+<!-- Main -->
+<div id="main">
+	<div class="inner">
+		<div id="columns">
+			<!-- Column 1 (horizontal, vertical, horizontal, vertical) -->
+			<!--
+			<div class="image fit">
+				<a href="index_gallery.html"><img src="images/Forder.png" alt="" /></a>
+			</div>-->
+		</div>
+	</div>
+</div>
+<!--footer-->
+<footer id="footer">
+	<a href="#" class="info fa fa-info-circle"><span>About</span></a>
+	<div class="inner">
+		<div class="content">
+			<h3>분류기준</h3>
+			<br>
+			<select id="classification" name="classification">
+				<option value="Date">Date</option>
+				<option value="Hashtag">Hashtag</option>
+				<option value="Place">Place</option>
+			</select>
+			<br>
+			<input type="button" value="분류하기" id="sort" onclick="button_click();">
+		</div>
+	</div>
+</footer>
+
+
+</body>
+</html>

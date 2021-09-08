@@ -1,0 +1,45 @@
+#spring: #띄어쓰기 없음
+#  datasource: #띄어쓰기 2칸
+#    url: jdbc:h2:tcp://localhost/~/test #4칸
+#    username: sa
+#    password:
+#    driver-class-name: org.h2.Driver # h2데이터베이스 커넥션과 관련된 이 데이터 소스설정이 완료가 된다.
+
+#  jpa: #띄어쓰기 2칸
+#    hibernate: #띄어쓰기 4칸
+#      ddl-auto: create #띄어쓰기 6칸  #애플리케이션 실행 시점에 내가 가지고 있는 테이블(엔티티)을 다 지우고 다시 테이블을 생성함.
+#    properties: #띄어쓰기 4칸
+#      hibernate: #띄어쓰기 6칸
+        # show_sql: true #띄어쓰기 8칸 # org.hibernate.SQL와 의 차이는 show_sql는 시스템 아웃에 출력하는 거고 org.hibernate.SQL는 로거를 통해 찍는다. 보통 로거를 통해 log를 찍는다.
+#        format_sql: true #띄어쓰기 8칸
+        #default_batch_fetch_size : 100
+
+#logging.level: #띄어쓰기 없음
+#  org.hibernate.SQL: debug #띄어쓰기 2칸 #hibernate와 JPA가 남기는 모든 log(SQL)가 debug모드로 남겨짐
+#  org.hibernate.type: trace #띄어쓰기 2칸
+
+
+#server:
+#  port: 8888
+#  servlet:
+#    session:
+#      timeout: 30
+#  ssl:
+#    enabled: true
+#    key-alias: ayokeystore
+#    key-store: ayokeystore.pkcs12
+#    key-store-type: PKCS12
+#    key-store-password: "rkdgus8520"
+#    key-password: "rkdgus8520"
+#    trust-store: ayotrust.pkcs12
+#    trust-store-password: "rkdgus8520"
+#    key-store-provider: SUN
+
+#server:
+#  port: 8443
+#  ssl:
+#    enabled: true
+#    key-alias: alias_name
+#    key-store: certificate.p12
+#    key-store-type: PKCS12
+#    key-store-password: 123456
